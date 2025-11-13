@@ -92,41 +92,37 @@ export class RegistroAlumnosComponent implements OnInit {
   }
 
   public registrar(){
+    //Validamos si el formulario está lleno y correcto
     this.errors = {};
     this.errors = this.alumnosService.validarAlumno(this.alumno, this.editar);
     if(Object.keys(this.errors).length > 0){
       return false;
     }
 
-    //Validar si las contraseñas coinciden
-    if(this.alumno.password != this.alumno.confirmar_password){
+    // Lógica para registrar un nuevo alumno
+    if(this.alumno.password == this.alumno.confirmar_password){
+      this.alumnosService.registrarAlumno(this.alumno).subscribe(
+        (response) => {
+          // Redirigir o mostrar mensaje de éxito
+          alert("Alumno registrado exitosamente");
+          console.log("Alumno registrado: ", response);
+          if(this.token && this.token !== ""){
+            this.router.navigate(["alumnos"]);
+          }else{
+            this.router.navigate(["/"]);
+          }
+        },
+        (error) => {
+          // Manejar errores de la API
+          alert("Error al registrar alumno");
+          console.error("Error al registrar alumno: ", error);
+        }
+      );
+    }else{
       alert("Las contraseñas no coinciden");
-      return false;
+      this.alumno.password="";
+      this.alumno.confirmar_password="";
     }
-
-    this.alumnosService.registrarAlumno(this.alumno).subscribe({
-
-      next: (response) => {
-        alert("Alumno registrado con éxito");
-        console.log("Alumno registrado", response);
-
-        //Validar si se registro entonces navega a la lista de Alumno
-        if(this.token != ""){
-          this.router.navigate(['alumno']);
-        }else{
-          this.router.navigate(['/']);
-        }
-
-      },
-      error: (error) => {
-        if(error.status == 400){
-          this.errors = error.error.errors;
-        }else{
-          alert("Error al registrar el Alumno");
-        }
-      }
-    })
-
   }
 
   public actualizar(){

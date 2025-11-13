@@ -4,6 +4,7 @@ import { ErrorsService } from './tools/errors.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { FacadeService } from './facade.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,7 +18,8 @@ export class AlumnosService {
   constructor(
     private validatorService: ValidatorService,
     private errorService: ErrorsService,
-    private http: HttpClient
+    private http: HttpClient,
+    private facadeService: FacadeService
   ) { }
 
   public esquemaAlumno() {
@@ -111,10 +113,31 @@ export class AlumnosService {
     return error
   }
 
-  //Aqui van los servicios HTTP
-    //Servicio para resgistrar un usuario nuevo
-  public registrarAlumno(data: any): Observable<any> {
-    return this.http.post<any>(`${environment.url_api}/alumno/`, data, httpOptions);
+   //Aquí van los servicios HTTP
+  //Servicio para registrar un nuevo alumno
+  public registrarAlumno (data: any): Observable <any>{
+    // Verificamos si existe el token de sesión
+    const token = this.facadeService.getSessionToken();
+    let headers: HttpHeaders;
+    if (token) {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    } else {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    }
+    return this.http.post<any>(`${environment.url_api}/alumnos/`, data, { headers });
+  }
+
+  //Servicio para obtener la lista de maestros
+  public obtenerListaAlumnos(): Observable<any>{
+    // Verificamos si existe el token de sesión
+    const token = this.facadeService.getSessionToken();
+    let headers: HttpHeaders;
+    if (token) {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    } else {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    }
+    return this.http.get<any>(`${environment.url_api}/lista-alumnos/`, { headers });
   }
 
 }

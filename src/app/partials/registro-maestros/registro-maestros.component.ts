@@ -143,39 +143,36 @@ export class RegistroMaestrosComponent implements OnInit {
   }
 
   public registrar(){
+    //Validamos si el formulario está lleno y correcto
     this.errors = {};
     this.errors = this.maestrosService.validarMaestro(this.maestro, this.editar);
     if(Object.keys(this.errors).length > 0){
       return false;
     }
-    //Validar si las contraseñas coinciden
-    if(this.maestro.password != this.maestro.confirmar_password){
+    //Validar la contraseña
+    if(this.maestro.password == this.maestro.confirmar_password){
+      this.maestrosService.registrarMaestro(this.maestro).subscribe(
+        (response) => {
+          // Redirigir o mostrar mensaje de éxito
+          alert("Maestro registrado exitosamente");
+          console.log("Maestro registrado: ", response);
+          if(this.token && this.token !== ""){
+            this.router.navigate(["maestros"]);
+          }else{
+            this.router.navigate(["/"]);
+          }
+        },
+        (error) => {
+          // Manejar errores de la API
+          alert("Error al registrar maestro");
+          console.error("Error al registrar maestro: ", error);
+        }
+      );
+    }else{
       alert("Las contraseñas no coinciden");
-      return false;
+      this.maestro.password="";
+      this.maestro.confirmar_password="";
     }
-
-    this.maestrosService.registrarMaestro(this.maestro).subscribe({
-
-      next: (response) => {
-        alert("Maestro registrado con éxito");
-        console.log("Maestro registrado", response);
-
-        //Validar si se registro entonces navega a la lista de Alumno
-        if(this.token != ""){
-          this.router.navigate(['maestro']);
-        }else{
-          this.router.navigate(['/']);
-        }
-
-      },
-      error: (error) => {
-        if(error.status == 400){
-          this.errors = error.error.errors;
-        }else{
-          alert("Error al registrar el Maestro");
-        }
-      }
-    })
   }
 
   public actualizar(){

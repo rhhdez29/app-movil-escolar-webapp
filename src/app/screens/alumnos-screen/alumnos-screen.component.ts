@@ -1,44 +1,43 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { AlumnosService } from 'src/app/services/alumnos.service';
 import { FacadeService } from 'src/app/services/facade.service';
-import { MaestrosService } from 'src/app/services/maestros.service';
-import {MatSort, Sort, MatSortModule} from '@angular/material/sort';
 
 @Component({
-  selector: 'app-maestros-screen',
-  templateUrl: './maestros-screen.component.html',
-  styleUrls: ['./maestros-screen.component.scss']
+  selector: 'app-alumnos-screen',
+  templateUrl: './alumnos-screen.component.html',
+  styleUrls: ['./alumnos-screen.component.scss']
 })
 
-export class MaestrosScreenComponent implements OnInit {
+export class AlumnosScreenComponent implements OnInit {
 
   public name_user: string = "";
   public rol: string = "";
   public token: string = "";
-  public lista_maestros: any[] = [];
+  public lista_alumnos: any[] = [];
 
   //Para la tabla
-  displayedColumns: string[] = ['id_trabajador', 'nombre', 'email', 'fecha_nacimiento', 'telefono', 'rfc', 'cubiculo', 'area_investigacion', 'materias_json', 'editar', 'eliminar'];
-  dataSource = new MatTableDataSource<DatosUsuario>(this.lista_maestros as DatosUsuario[]);
+  displayedColumns: string[] = ['matricula', 'nombre', 'email', 'fecha_nacimiento', 'curp', 'rfc', 'edad', 'telefono','ocupacion', 'editar', 'eliminar'];
+  dataSource = new MatTableDataSource<DatosUsuario>(this.lista_alumnos as DatosUsuario[]);
 
   @ViewChild(MatPaginator)
   set matPaginator(p: MatPaginator) {
     this.dataSource.paginator = p;
   }
   @ViewChild(MatSort)
-  set matSort(s: MatSort | undefined) {
-    if (s) this.dataSource.sort = s;
-  }
+    set matSort(s: MatSort | undefined) {
+      if (s) this.dataSource.sort = s;
+    }
 
   ngAfterViewInit() {
-
   }
 
   constructor(
     public facadeService: FacadeService,
-    public maestrosService: MaestrosService,
+    public alumnosService: AlumnosService,
     private router: Router,
   ) { }
 
@@ -52,38 +51,36 @@ export class MaestrosScreenComponent implements OnInit {
     if(this.token == ""){
       this.router.navigate(["/"]);
     }
-    //Obtener maestros
-    this.obtenerMaestros();
+    //Obtener alumnos
+    this.obtenerAlumnos();
   }
 
-  // Consumimos el servicio para obtener los maestros
-  //Obtener maestros
-  public obtenerMaestros() {
-    this.maestrosService.obtenerListaMaestros().subscribe(
+  // Consumimos el servicio para obtener los alumnos
+  //Obtener alumnos
+  public obtenerAlumnos() {
+    this.alumnosService.obtenerListaAlumnos().subscribe(
       (response) => {
-        this.lista_maestros = response;
-        console.log("Lista users: ", this.lista_maestros);
-        if (this.lista_maestros.length > 0) {
+        this.lista_alumnos = response;
+        console.log("Lista users: ", this.lista_alumnos);
+        if (this.lista_alumnos.length > 0) {
           //Agregar datos del nombre e email
-          this.lista_maestros.forEach(usuario => {
+          this.lista_alumnos.forEach(usuario => {
             usuario.nombre= usuario.user.first_name + " " + usuario.user.last_name;
             usuario.email = usuario.user.email;
           });
-          console.log("Maestros: ", this.lista_maestros);
+          console.log("Alumnos: ", this.lista_alumnos);
 
-          this.dataSource = new MatTableDataSource<DatosUsuario>(this.lista_maestros as DatosUsuario[]);
+          this.dataSource = new MatTableDataSource<DatosUsuario>(this.lista_alumnos as DatosUsuario[]);
         }
       }, (error) => {
-        console.error("Error al obtener la lista de maestros: ", error);
-        alert("No se pudo obtener la lista de maestros");
+        console.error("Error al obtener la lista de alumnos: ", error);
+        alert("No se pudo obtener la lista de alumnos");
       }
     );
   }
 
-
-
   public goEditar(idUser: number) {
-    this.router.navigate(["registro-usuarios/maestros/" + idUser]);
+    this.router.navigate(["registro-usuarios/alumnos/" + idUser]);
   }
 
   public delete(idUser: number) {
@@ -93,7 +90,6 @@ export class MaestrosScreenComponent implements OnInit {
   public onSearch(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
   }
 
 }
@@ -101,13 +97,13 @@ export class MaestrosScreenComponent implements OnInit {
 //Esto va fuera de la llave que cierra la clase
 export interface DatosUsuario {
   id: number,
-  id_trabajador: number;
+  matricula: number;
   nombre: string;
   email: string;
   fecha_nacimiento: string,
-  telefono: string,
+  curp: string,
   rfc: string,
-  cubiculo: string,
-  area_investigacion: number,
-  materias_json: string[];
+  edad: number,
+  telefono: number,
+  ocupacion: string,
 }

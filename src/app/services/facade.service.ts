@@ -5,18 +5,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
 //Estas son variables para las cookies
-const session_cookie_name = 'app-movil-escolar-token';
-const user_email_cookie_name = 'app-movil-escolar-email';
-const user_id_cookie_name = 'app-movil-escolar-user_id';
-const user_complete_name_cookie_name = 'app-movil-escolar-user_complete_name';
-const group_name_cookie_name = 'app-movil-escolar-group_name';
-const codigo_cookie_name = 'app-movil-escolar-codigo';
+const session_cookie_name = 'control-escolar-token';
+const user_email_cookie_name = 'control-escolar-email';
+const user_id_cookie_name = 'control-escolar-user_id';
+const user_complete_name_cookie_name = 'control-escolar-user_complete_name';
+const group_name_cookie_name = 'control-escolar-group_name';
+const codigo_cookie_name = 'control-escolar-codigo';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,6 @@ export class FacadeService {
     private cookieService: CookieService,
     private validatorService: ValidatorService,
     private errorService: ErrorsService,
-
   ) { }
 
   //Funcion para validar login
@@ -38,10 +38,12 @@ export class FacadeService {
       "username": username,
       "password": password
     };
+
     console.log("Valindando login con datos: ", data);
 
     let error: any = {};
 
+    //Validaciones
     if(!this.validatorService.required(data["username"])){
       error["username"] = this.errorService.required;
     }else if(!this.validatorService.max(data["username"], 40)){
@@ -55,7 +57,23 @@ export class FacadeService {
     }
 
     return error;
+  }
 
+  //Iniciar sesión
+  public login(username:String, password:String): Observable<any> {
+    let data = {
+      username: username,
+      password: password
+    }
+    return this.http.post<any>(`${environment.url_api}/login/`,data);
+  }
+
+  //Cerrar sesión
+  public logout(): Observable<any> {
+    let headers: any;
+    let token = this.getSessionToken();
+    headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
+    return this.http.get<any>(`${environment.url_api}/logout/`, {headers: headers});
   }
 
   // Funciones para utilizar las cookies en web
@@ -73,10 +91,6 @@ export class FacadeService {
   saveCookieValue(key:string, value:string){
     var secure = environment.url_api.indexOf("https")!=-1;
     this.cookieService.set(key, value, undefined, undefined, undefined, secure, secure?"None":"Lax");
-  }
-
-  getSessionToken(){
-    return this.cookieService.get(session_cookie_name);
   }
 
   saveUserData(user_data: any) {
@@ -98,6 +112,10 @@ export class FacadeService {
     this.cookieService.deleteAll();
   }
 
+  getSessionToken(){
+    return this.cookieService.get(session_cookie_name);
+  }
+
   getUserEmail(){
     return this.cookieService.get(user_email_cookie_name);
   }
@@ -113,5 +131,4 @@ export class FacadeService {
   getUserGroup(){
     return this.cookieService.get(group_name_cookie_name);
   }
-
 }

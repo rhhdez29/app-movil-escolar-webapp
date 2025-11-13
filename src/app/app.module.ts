@@ -26,8 +26,16 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatTableModule} from '@angular/material/table';
+import {MatSortModule} from '@angular/material/sort';
 
+// Paginación
+import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 
+import { getSpanishPaginatorIntl } from './shared/spanish-paginator-initl';
+
+// IMPORTANTE: añade el módulo de Sidenav
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 
 //Ngx-cookie-service
@@ -36,6 +44,13 @@ import { CookieService } from 'ngx-cookie-service';
 // Third Party Modules
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { A11yModule } from "@angular/cdk/a11y";
+import { HomeScreenComponent } from './screens/home-screen/home-screen.component';
+import { AlumnosScreenComponent } from './screens/alumnos-screen/alumnos-screen.component';
+import { MaestrosScreenComponent } from './screens/maestros-screen/maestros-screen.component';
+import { AdminScreenComponent } from './screens/admin-screen/admin-screen.component';
+import { SidebarComponent } from './partials/sidebar/sidebar.component';
+import { NavbarUserComponent } from './partials/navbar-user/navbar-user.component';
+
 
 
 
@@ -49,6 +64,12 @@ import { A11yModule } from "@angular/cdk/a11y";
     RegistroAdminComponent,
     RegistroAlumnosComponent,
     RegistroMaestrosComponent,
+    HomeScreenComponent,
+    AlumnosScreenComponent,
+    MaestrosScreenComponent,
+    AdminScreenComponent,
+    SidebarComponent,
+    NavbarUserComponent,
 
   ],
   imports: [
@@ -69,11 +90,16 @@ import { A11yModule } from "@angular/cdk/a11y";
     MatSelectModule,
     MatCheckboxModule,
     A11yModule,
+    MatSidenavModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatSortModule,
 ],
   providers: [
     CookieService,
     { provide: MAT_DATE_LOCALE, useValue: 'es-MX' },
-    provideNgxMask()
+    provideNgxMask(),
+    { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() }
   ],
   bootstrap: [AppComponent]
 })

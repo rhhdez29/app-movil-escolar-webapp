@@ -4,6 +4,7 @@ import { ErrorsService } from './tools/errors.service';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { FacadeService } from './facade.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,7 +18,8 @@ export class MaestrosService {
   constructor(
     private validatorService: ValidatorService,
     private errorService: ErrorsService,
-    private http: HttpClient
+    private http: HttpClient,
+    private facadeService: FacadeService
   ) { }
 
   public esquemaMaestro() {
@@ -105,10 +107,32 @@ export class MaestrosService {
     return error
   }
 
-   //Aqui van los servicios HTTP
-      //Servicio para resgistrar un usuario nuevo
-    public registrarMaestro(data: any): Observable<any> {
-      return this.http.post<any>(`${environment.url_api}/maestro/`, data, httpOptions);
+   //Aquí van los servicios HTTP
+  //Servicio para registrar un nuevo usuario
+  public registrarMaestro (data: any): Observable <any>{
+    // Verificamos si existe el token de sesión
+    const token = this.facadeService.getSessionToken();
+    let headers: HttpHeaders;
+    if (token) {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    } else {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     }
+    return this.http.post<any>(`${environment.url_api}/maestros/`, data, { headers });
+  }
+
+
+   //Servicio para obtener la lista de maestros
+  public obtenerListaMaestros(): Observable<any>{
+    // Verificamos si existe el token de sesión
+    const token = this.facadeService.getSessionToken();
+    let headers: HttpHeaders;
+    if (token) {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    } else {
+      headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    }
+    return this.http.get<any>(`${environment.url_api}/lista-maestros/`, { headers });
+  }
 
 }
