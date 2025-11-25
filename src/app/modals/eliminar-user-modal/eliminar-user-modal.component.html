@@ -1,0 +1,45 @@
+<div class="wrapper">
+  <div class="icon-close">
+      <button class="btn" (click)="cerrar_modal()">
+          <i class="bi bi-x-lg"></i>
+      </button>
+  </div>
+  <ng-container *ngIf="tipo=='materia' else noMateria">
+    <h1 class="title-modal">ADVERTENCIA!!</h1>
+      <span class="descripcion">Estás a punto de eliminar esta Materia. Una vez que la elimines no podrás deshacer esta acción.</span>
+      <div class="buttons-modal">
+          <button mat-button class="btn-regresar" (click)="cerrar_modal()">
+              Cancelar
+          </button>
+          <button mat-button class="btn-eliminar" (click)="eliminarMateria()">
+              Eliminar
+          </button>
+      </div>
+  </ng-container>
+  <ng-template #noMateria>
+    <ng-container *ngIf="data.rol === rolUser && data.id === userId; else diferentUser" class="body-modal">
+      <h1 class="title-modal">ATENCION!!</h1>
+      <span class="descripcion">Estás a punto de eliminar tu cuenta. Una vez que la elimines no podrás deshacer esta acción.</span>
+      <div class="buttons-modal">
+          <button mat-button class="btn-regresar" (click)="cerrar_modal()">
+              Cancelar
+          </button>
+          <button mat-button class="btn-eliminar" (click)="eliminarUser()">
+              Eliminar
+          </button>
+      </div>
+  </ng-container>
+  <ng-template #diferentUser>
+    <h1 class="title-modal">Eliminar {{rol}}</h1>
+      <span class="descripcion">Estás a punto de eliminar este {{rol}}. Una vez que lo elimines no podrás deshacer esta acción.</span>
+      <div class="buttons-modal">
+          <button mat-button class="btn-regresar" (click)="cerrar_modal()">
+              Cancelar
+          </button>
+          <button mat-button class="btn-eliminar" (click)="eliminarUser()">
+              Eliminar
+          </button>
+      </div>
+  </ng-template>
+  </ng-template>
+</div>

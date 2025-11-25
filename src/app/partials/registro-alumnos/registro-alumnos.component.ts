@@ -126,6 +126,27 @@ export class RegistroAlumnosComponent implements OnInit {
   }
 
   public actualizar(){
+    // Validación de los datos
+    this.errors = {};
+    this.errors = this.alumnosService.validarAlumno(this.alumno, this.editar);
+    if(Object.keys(this.errors).length > 0){
+      return false;
+    }
+
+    // Ejecutamos el servicio de actualización
+    this.alumnosService.actualizarAlumno(this.alumno).subscribe(
+      (response) => {
+        // Redirigir o mostrar mensaje de éxito
+        alert("Alumno actualizado exitosamente");
+        console.log("Alumno actualizado: ", response);
+        this.router.navigate(["alumnos"]);
+      },
+      (error) => {
+        // Manejar errores de la API
+        alert("Error al actualizar Alumno");
+        console.error("Error al actualizar Alumno: ", error);
+      }
+    );
 
   }
 

@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { EliminarUserModalComponent } from 'src/app/modals/eliminar-user-modal/eliminar-user-modal.component';
 import { AlumnosService } from 'src/app/services/alumnos.service';
 import { FacadeService } from 'src/app/services/facade.service';
 
@@ -39,6 +41,7 @@ export class AlumnosScreenComponent implements OnInit {
     public facadeService: FacadeService,
     public alumnosService: AlumnosService,
     private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -80,12 +83,43 @@ export class AlumnosScreenComponent implements OnInit {
   }
 
   public goEditar(idUser: number) {
-    this.router.navigate(["registro-usuarios/alumnos/" + idUser]);
+    this.router.navigate(["registro-usuarios/alumno/" + idUser]);
   }
 
   public delete(idUser: number) {
+      //Administrador puede eliminar a cualquier alumno
+      // Alumno solo puede eliminar a su propio registro
+      const userId = Number(this.facadeService.getUserId());
 
-  }
+      if (this.rol === 'administrador' || this.rol === 'maestro' || (this.rol === 'alumno' && userId === idUser) ) {
+        //Si es administrador o es alumno, es decir, cumple la condición, se puede eliminar
+        const dialogRef = this.dialog.open(EliminarUserModalComponent,{
+          data: {id: idUser, rol: 'alumno'}, //Se pasan valores a través del componente
+          height: '288px',
+          width: '328px',
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if(result.isDelete){
+            console.log("Alumno eliminado");
+            alert("Alumno eliminado correctamente.");
+            if(userId === idUser){
+              // Si el alumno se elimina a sí mismo, redirigir al inicio de sesión
+              this.router.navigate(["/"]);
+            }else{
+              // Si no, recargar la página actual
+              window.location.reload();
+            }
+          }else{
+            alert("Alumno no se ha podido eliminar.");
+            console.log("No se eliminó el alumno");
+          }
+        });
+      }else{
+        alert("No tienes permisos para eliminar este alumno.");
+      }
+
+    }
 
   public onSearch(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

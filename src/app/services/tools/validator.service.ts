@@ -76,6 +76,17 @@ export class ValidatorService {
     console.log(pat.test(input), input);
     return pat.test(input);
   }
+
+  // validamos que las horas no sean iguales o que la hora de inicio sea menor a la de fin o viceversa
+  timeValid(input:any, input2:any){
+    if(input === input2){
+      return false;
+    }
+    if(input > input2){
+      return false;
+    }
+    return true;
+  }
   // public isEmail(email:string):boolean{
   //   const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   //   return re.test(email);

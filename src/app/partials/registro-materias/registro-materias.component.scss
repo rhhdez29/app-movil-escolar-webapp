@@ -1,0 +1,434 @@
+.wrapper {
+  margin: 0;
+  min-height: 100vh;
+  width: 100%;
+  background-image: url('/assets/images/fondo-school-claro.jpg');
+  background-position: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+body {
+  padding: 0!important;
+  margin: 0!important;
+}
+
+.reg-shell {
+  display: grid;
+  gap: 20px;
+  padding: clamp(16px, 3vw, 28px);
+}
+
+/* Tarjeta de selección de rol */
+.role-card {
+  width: min(100%, 980px);
+  margin-inline: auto;
+
+  .role-card-header {
+    // width: 100%;
+    // height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+    padding-bottom: 8px;
+  }
+
+  .actions-header-colum {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2px;
+    width: 100%;
+  }
+
+
+  .role-row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    margin-top: 12px;
+  }
+
+  .role-pill {
+    display: inline-flex;
+    justify-content: center;
+    text-align: center;
+    padding: 6px 10px;
+  }
+
+  .title-card {
+    width: 100%;
+    font-family: Nexa-Bold, Arial, sans-serif;
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem); /* ~22–32px */
+    margin-bottom: 0.25rem;
+  }
+
+  .subtitle-card {
+    width: 100%;
+    font-family: Nexa-Light, Arial, sans-serif;
+    font-size: clamp(1rem, 0.8rem + 0.5vw, 1.25rem); /* ~16–20px */
+    color: #000000;
+    margin-top: 1rem;
+  }
+
+  .text-radio {
+    width: 100%;
+    font-size: 1.25rem;
+    font-family: Nexa, Arial, sans-serif;
+    color: #000000;
+  }
+}
+
+/* Botón regresar */
+.back-btn {
+  width: min(100%, 980px);
+  margin-inline: auto;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.back-btn button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: none;
+  font-weight: 500;
+  border-radius: 8px;
+  padding-inline: 14px;
+}
+
+/* Área de formularios */
+.forms-area {
+  width: min(100%, 980px);
+  height: 980px;
+  overflow-y: auto;
+  margin-inline: auto;
+}
+/* Contenedor con el mismo ancho que .role-card y .forms-area */
+.actions-row {
+  //width: min(100%, 980px);
+  margin: 8px auto 0;       /* centra el contenedor como la card */
+  display: flex;
+  justify-content: flex-end; /* botón a la derecha */
+}
+
+/* Botón minimal y consistente con la UI */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: none;     /* no todo en mayúsculas */
+  font-weight: 500;
+  border-radius: 10px;      /* mismo radio suave */
+  padding-inline: 14px;
+}
+
+.actions-row {
+  //width: min(100%, 980px);
+  margin: 8px auto 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.back-btn {
+  border-radius: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-icon {
+  width: auto!important;
+  height: auto!important;
+  font-size: 1.9rem;
+  color: #0092B8;
+}
+
+/* Título de dias */
+.title-dias {
+  font-size: 16px;
+  text-align: left;
+  font-family: Nexa;
+  letter-spacing: 2px;
+  color: #231F20;
+  opacity: 1;
+}
+
+/* Contenedor para la selección de dias */
+.select-dias {
+  width: 100%;
+  padding-left: 2.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+/* Contenedor para la selección de dias */
+.select-horario {
+  width: 100%;
+  padding-left: 2.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.select-horario h2 {
+  font-size: 16px;
+  text-align: left;
+  font-family: Nexa;
+  letter-spacing: 2px;
+  color: #231F20;
+  opacity: 1;
+}
+
+.time-picker-inputs{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-time-picker{
+  font-size: 16px;
+  text-align: left;
+  font-family: Nexa;
+  letter-spacing: 2px;
+  color: #231F20;
+  opacity: 1;
+  padding: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+/* =========================
+   Ajustes para la vista móvil (≤700px)
+   ========================= */
+
+@media (max-width: 700px) {
+  //Este selector me ayuda a modificar el ancho del label del radio button
+  ::ng-deep .mdc-label {
+    width: 180px;
+  }
+  .role-card {
+    padding: 15px;
+  }
+
+  .role-row {
+    flex-direction: row;  /* Alinea los radio buttons verticalmente */
+    gap: 10px;
+  }
+
+  .role-pill {
+    font-size: 1rem;
+    padding: 8px 12px;
+  }
+
+  /* Títulos centrados y con más espacio */
+  .title-perfil {
+    text-align: center;
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem); /* ~22–32px */
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .title-table {
+    text-align: center;
+    font-size: clamp(1.75rem, 1.3rem + 1.3vw, 2.25rem); /* ~24–36px */
+    line-height: 1.25;
+    margin-top: 0.5rem;
+  }
+
+  .mat-radio-button {
+    font-size: 1rem;
+  }
+
+}
+
+.wrapper-registro {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #fff;
+}
+
+.section-registro{
+  width: 90%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.body-registro {
+  width: 100%;
+  display: flex;
+  height: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: 2.5rem;
+  gap: 2.2rem;
+  background: #fff;
+  align-items: stretch;     /* que los hijos ocupen todo el ancho */
+  padding: 2.5rem 1.5rem;   /* padding arriba y a los lados */
+}
+
+.title-user{
+  font-size: 28px;
+  text-align: left;
+  font-family: Nexa-Bold;
+  letter-spacing: 2px;
+  color: #231F20;
+  text-transform: capitalize;
+  opacity: 1;
+}
+
+.time-error {
+  white-space: pre-line;   /* <-- esto hace que \n se vea como salto de línea */
+}
+
+mat-form-field{
+  width: 90%!important;
+  margin-left: 5%;
+  height: 48px!important;
+  text-align: left!important;
+}
+
+//Para la sección de botones
+.section-buttons{
+  width: 90%;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 3rem;
+}
+
+.btn-primary {
+  width: 208px;
+  height: 48px;
+  background-color: #0092B8!important;
+  border-color: #0092B8!important;
+  border-radius: 8px!important;
+  opacity: 1;
+  //Fuente
+  text-align: center;
+  font-family: Nexa-Bold;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  opacity: 1;
+}
+
+.btn-primary:hover {
+  background-color: #017895!important;
+  border-color: #017895!important;
+
+}
+
+.btn-danger{
+  width: 208px;
+  height: 48px;
+  border-radius: 8px!important;
+  opacity: 1;
+  //Fuente
+  text-align: center;
+  font-family: Nexa-Bold;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  opacity: 1;
+}
+
+.mat-hint-margin {
+  margin-bottom: 1rem;
+}
+
+/* =========================
+   Ajustes para el formulario en dispositivos móviles
+   ========================= */
+
+/* Título del formulario (en móvil) */
+@media (max-width: 700px) {
+  .title-user {
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem); /* Asegura que el tamaño sea adecuado */
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    text-align: center; /* Centrado en dispositivos móviles */
+    white-space: normal; /* Evita que el texto se divida o se sobreponga */
+  }
+
+  .title-dias {
+    font-size: 1.2rem; /* Asegura que el tamaño sea adecuado en dispositivos pequeños */
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+
+  .select-dias {
+    width: 100%;
+    gap: 0.5rem;
+    padding-left: 0rem;
+  }
+
+  .select-horario {
+    width: 100%;
+    gap: 0.5rem;
+    padding-left: 0rem;
+  }
+  .time-picker-inputs{
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+    margin: 0;
+    align-items: stretch;
+  }
+
+  mat-form-field {
+    width: 100% !important; /* Hace que el formulario ocupe todo el ancho */
+    margin-left: 0; /* Elimina el margen de la izquierda en móviles */
+  }
+
+  /* Ajuste para los botones */
+  .btn-primary, .btn-danger {
+    width: 100%; /* Ancho completo para los botones en móviles */
+    font-size: 14px; /* Reducción de tamaño en botones */
+    height: 48px;
+  }
+
+  .section-buttons {
+    flex-direction: column; /* Coloca los botones en columna en pantallas pequeñas */
+    gap: 1rem; /* Espaciado entre los botones */
+  }
+}
+
+/* =========================
+   Ajustes adicionales para la vista móvil (≤ 700px)
+   ========================= */
+@media (max-width: 700px) {
+
+  .mat-form-field {
+    width: 100% !important;
+    margin-left: 0; /* Elimina el margen */
+  }
+
+}
+
+.invalid-feedback, .feedback-error {
+  margin-left: 2.5rem;
+}
+

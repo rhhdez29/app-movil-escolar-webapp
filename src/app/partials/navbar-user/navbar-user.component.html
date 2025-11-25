@@ -23,10 +23,15 @@
         <span class="material-icons">bar_chart</span>
         <span>Gráficas</span>
       </li>
+      <li *ngIf="canSeeAdminItems()" routerLink="/registro-materias" routerLinkActive="active"
+          class="scoop-navbar-item" (click)="closeSidebar()">
+          <span class="material-icons">library_add</span>
+          <span>Registro de Materias</span>
+        </li>
       <li *ngIf="canSeeTeacherItems()" routerLink="/materias" routerLinkActive="active"
         class="scoop-navbar-item">
         <span class="material-icons">library_books</span>
-        <span>Materias</span>
+        <span>Lista de Materias</span>
       </li>
       <li *ngIf="canSeeTeacherItems()" routerLink="/eventos-academicos" routerLinkActive="active"
         class="scoop-navbar-item">
@@ -83,10 +88,15 @@
           <span class="material-icons">bar_chart</span>
           <span>Gráficas</span>
         </li>
+        <li *ngIf="canSeeAdminItems()" routerLink="/registro-materias" routerLinkActive="active"
+          class="scoop-navbar-item" (click)="closeSidebar()">
+          <span class="material-icons">library_add</span>
+          <span>Registro de Materias</span>
+        </li>
         <li *ngIf="canSeeTeacherItems()" routerLink="/materias" routerLinkActive="active"
           class="scoop-navbar-item" (click)="closeSidebar()">
           <span class="material-icons">library_books</span>
-          <span>Materias</span>
+          <span>Lista de Materias</span>
         </li>
         <li *ngIf="canSeeTeacherItems()" routerLink="/eventos-academicos" routerLinkActive="active"
           class="scoop-navbar-item" (click)="closeSidebar()">

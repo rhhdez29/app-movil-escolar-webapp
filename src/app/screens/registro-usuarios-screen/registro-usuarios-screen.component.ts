@@ -4,6 +4,8 @@ import { FacadeService } from 'src/app/services/facade.service';
 import { Location } from '@angular/common';
 import { MatRadioChange } from '@angular/material/radio';
 import { AdministradoresService } from '../../services/administradores.service';
+import { MaestrosService } from '../../services/maestros.service';
+import { AlumnosService } from '../../services/alumnos.service';
 
 @Component({
   selector: 'app-registro-usuarios-screen',
@@ -33,6 +35,8 @@ export class RegistroUsuariosScreenComponent implements OnInit {
     private router: Router,
     public facadeService: FacadeService,
     private administradoresService: AdministradoresService,
+    private maestrosService: MaestrosService,
+    private alumnosService: AlumnosService
   ) { }
 
   ngOnInit(): void {
@@ -76,9 +80,31 @@ export class RegistroUsuariosScreenComponent implements OnInit {
         }
       );
     }else if(this.rol == "maestro"){
-      // TODO: Implementar lógica para obtener maestro por ID
+      this.maestrosService.obtenerMaestroPorID(this.idUser).subscribe(
+        (response) => {
+          this.user = response;
+          console.log("Usuario original obtenido: ", this.user);
+          // Asignar datos, soportando respuesta plana o anidada
+          this.user.first_name = response.user?.first_name || response.first_name;
+          this.user.last_name = response.user?.last_name || response.last_name;
+          this.user.email = response.user?.email || response.email;
+          this.user.tipo_usuario = this.rol;
+          this.isMaestro = true;
+        }
+      );
     }else if(this.rol == "alumno"){
-      // TODO: Implementar lógica para obtener alumno por ID
+      this.alumnosService.obtenerAlumnoPorID(this.idUser).subscribe(
+        (response) => {
+          this.user = response;
+          console.log("Usuario original obtenido: ", this.user);
+          // Asignar datos, soportando respuesta plana o anidada
+          this.user.first_name = response.user?.first_name || response.first_name;
+          this.user.last_name = response.user?.last_name || response.last_name;
+          this.user.email = response.user?.email || response.email;
+          this.user.tipo_usuario = this.rol;
+          this.isAlumno = true;
+        }
+      );
     }
 
   }

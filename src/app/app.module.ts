@@ -28,6 +28,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
+import {MatDialogModule} from '@angular/material/dialog';
 
 // Paginación
 import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
@@ -37,6 +38,8 @@ import { getSpanishPaginatorIntl } from './shared/spanish-paginator-initl';
 // IMPORTANTE: añade el módulo de Sidenav
 import { MatSidenavModule } from '@angular/material/sidenav';
 
+// Modulo para las gráficas
+import { NgChartsModule } from 'ng2-charts';
 
 //Ngx-cookie-service
 import { CookieService } from 'ngx-cookie-service';
@@ -50,7 +53,14 @@ import { MaestrosScreenComponent } from './screens/maestros-screen/maestros-scre
 import { AdminScreenComponent } from './screens/admin-screen/admin-screen.component';
 import { SidebarComponent } from './partials/sidebar/sidebar.component';
 import { NavbarUserComponent } from './partials/navbar-user/navbar-user.component';
+import { EliminarUserModalComponent } from './modals/eliminar-user-modal/eliminar-user-modal.component';
+import { RegistroMateriasComponent } from './partials/registro-materias/registro-materias.component';
 
+//time picker
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { MateriasScreenComponent } from './screens/materias-screen/materias-screen.component';
+import { EditarMateriaComponent } from './modals/editar-materia-modal/editar-materia-modal.component';
+import { GraficasScreenComponent } from './screens/graficas-screen/graficas-screen.component';
 
 
 
@@ -70,6 +80,11 @@ import { NavbarUserComponent } from './partials/navbar-user/navbar-user.componen
     AdminScreenComponent,
     SidebarComponent,
     NavbarUserComponent,
+    EliminarUserModalComponent,
+    RegistroMateriasComponent,
+    MateriasScreenComponent,
+    EditarMateriaComponent,
+    GraficasScreenComponent,
 
   ],
   imports: [
@@ -94,6 +109,9 @@ import { NavbarUserComponent } from './partials/navbar-user/navbar-user.componen
     MatPaginatorModule,
     MatTableModule,
     MatSortModule,
+    MatDialogModule,
+    NgxMaterialTimepickerModule,
+    NgChartsModule
 ],
   providers: [
     CookieService,
