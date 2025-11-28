@@ -15,6 +15,7 @@ export class NavbarUserComponent implements OnInit {
   public showUserMenu: boolean = false;
   public mobileOpen: boolean = false;
   public userRole: string = '';
+  public isDropDownOpen = false;
 
   // Estas variables se utilizarán por si se habilita el tema oscuro
   paletteMode: 'light' | 'dark' = 'light';
@@ -121,6 +122,10 @@ export class NavbarUserComponent implements OnInit {
         this.closeSidebar();
       }
     );
+  }
+
+  toggleAdminMenu(): void {
+    this.isDropDownOpen = !this.isDropDownOpen;
   }
 
   // Role helpers

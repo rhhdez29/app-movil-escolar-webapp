@@ -20,6 +20,7 @@ export class MaestrosScreenComponent implements OnInit {
   public rol: string = "";
   public token: string = "";
   public lista_maestros: any[] = [];
+  public id: number = 0;
 
   //Para la tabla
   displayedColumns: string[] = ['id_trabajador', 'nombre', 'email', 'fecha_nacimiento', 'telefono', 'rfc', 'cubiculo', 'area_investigacion', 'materias_json', 'editar', 'eliminar'];
@@ -48,10 +49,11 @@ export class MaestrosScreenComponent implements OnInit {
   ngOnInit(): void {
     this.name_user = this.facadeService.getUserCompleteName();
     this.rol = this.facadeService.getUserGroup();
+    this.id = Number(this.facadeService.getUserId());
     //Validar que haya inicio de sesión
     //Obtengo el token del login
     this.token = this.facadeService.getSessionToken();
-    console.log("Token: ", this.token);
+    console.log("Id: ", this.id);
     if(this.token == ""){
       this.router.navigate(["/"]);
     }
@@ -87,6 +89,7 @@ export class MaestrosScreenComponent implements OnInit {
 
   public goEditar(idUser: number) {
     this.router.navigate(["registro-usuarios/maestro/" + idUser]);
+    console.log("id:", idUser, "idCookies:", this.id);
   }
 
   public delete(idUser: number) {

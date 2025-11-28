@@ -18,11 +18,11 @@ export class GraficasScreenComponent implements OnInit {
 
   //Histograma
   lineChartData = {
-    labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    labels: ["Administradores", "Maestros", "Alumnos"],
     datasets: [
       {
-        data:[89, 34, 43, 54, 28, 74, 93],
-        label: 'Registro de materias',
+        data:[0,0,0],
+        label: 'Registro de usuarios',
         backgroundColor: '#F88406'
       }
     ]
@@ -34,11 +34,11 @@ export class GraficasScreenComponent implements OnInit {
 
   //Barras
   barChartData = {
-    labels: ["Congreso", "FePro", "Presentación Doctoral", "Feria Matemáticas", "T-System"],
+    labels: ["Administradores", "Maestros", "Alumnos"],
     datasets: [
       {
-        data:[34, 43, 54, 28, 74],
-        label: 'Eventos Académicos',
+        data:[0,0,0],
+        label: 'Registro de usuarios',
         backgroundColor: [
           '#F88406',
           '#FCFF44',
@@ -91,12 +91,6 @@ export class GraficasScreenComponent implements OnInit {
   }
   doughnutChartOption = {
     responsive: false,
-    plugins: {
-      datalabels: {
-        // si quieres que el número se vea encima de cada sección:
-        formatter: (value: unknown) => value as number  // solo muestra el valor tal cual
-      }
-    }
   };
   doughnutChartPlugins = [ DatalabelsPlugin ];
 
@@ -120,6 +114,7 @@ export class GraficasScreenComponent implements OnInit {
         const maestros = Number(this.total_user.maestros) || 0;
         const alumnos  = Number(this.total_user.alumnos)  || 0;
 
+        //Actualizamos los datos de las graficas con los de la bdd
         this.pieChartData = {
           ...this.pieChartData,
           datasets: [
@@ -135,6 +130,26 @@ export class GraficasScreenComponent implements OnInit {
           datasets: [
             {
               ...this.doughnutChartData.datasets[0],
+              data: [admins, maestros, alumnos]
+            }
+          ]
+        };
+
+        this.lineChartData = {
+          ...this.lineChartData,
+          datasets: [
+            {
+              ...this.lineChartData.datasets[0],
+              data: [admins, maestros, alumnos]
+            }
+          ]
+        };
+
+        this.barChartData = {
+          ...this.barChartData,
+          datasets: [
+            {
+              ...this.barChartData.datasets[0],
               data: [admins, maestros, alumnos]
             }
           ]

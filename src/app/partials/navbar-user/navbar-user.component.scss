@@ -378,3 +378,38 @@
   font-size: 1.08rem;
   padding: 1rem 1.2rem;
 }
+
+.scoop-navbar-dropdown {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+
+.scoop-navbar-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;   /* opcional */
+  cursor: pointer;
+  align-items: flex-start;
+  margin-left: 20px;
+}
+
+.scoop-navbar-dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;          /* quita margen por defecto del <ul> */
+  padding: 0;
+  align-items: flex-start;
+  padding-top: 12px;
+}
+
+
+
+.scoop-navbar-dropdown.active, .scoop-navbar-dropdown:hover{
+  background: #223153 !important;
+}
+

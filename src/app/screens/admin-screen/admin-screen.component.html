@@ -43,7 +43,14 @@
                 <td>{{admin.user.email}}</td>
                 <td>{{admin.rfc}}</td>
                 <td>{{admin.ocupacion}}</td>
-                <td class="td-editar"><i class="bi bi-pencil-square" (click)="goEditar(admin.id)"></i></td>
+                <td class="td-editar"><button
+                      mat-icon-button
+                      color="primary"
+                      (click)="goEditar(admin.id)"
+                      [disabled]="id !== admin.id"
+                    >
+                      <i class="bi bi-pencil-square"></i>
+                    </button></td>
                 <td class="td-eliminar"><i class="bi bi-trash3-fill" (click)="delete(admin.id)"></i></td>
               </tr>
             </tbody>

@@ -15,6 +15,7 @@ export class AdminScreenComponent implements OnInit {
   public name_user: string = "";
   public lista_admins: any[] = [];
   public rol: string = "";
+  public id: number=0;
 
   constructor(
     public facadeService: FacadeService,
@@ -27,6 +28,7 @@ export class AdminScreenComponent implements OnInit {
     // Lógica de inicialización aquí
     this.name_user = this.facadeService.getUserCompleteName();
     this.rol = this.facadeService.getUserGroup();
+    this.id = Number(this.facadeService.getUserId())
     // Obtenemos los administradores
     this.obtenerAdmins();
   }

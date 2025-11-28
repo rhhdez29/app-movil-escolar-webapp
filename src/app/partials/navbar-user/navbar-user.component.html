@@ -2,11 +2,30 @@
   <!-- Desktop sidebar -->
   <nav class="scoop-side-navbar" *ngIf="!isMobileView">
     <ul class="scoop-navbar-list">
-      <li *ngIf="canSeeRegisterItem()" routerLink="/registro-usuarios" routerLinkActive="active"
-        class="scoop-navbar-item">
-        <span class="material-icons">person_add</span>
-        <span>Registro</span>
-      </li>
+
+      <li *ngIf="canSeeStudentItems()" class="scoop-navbar-item scoop-navbar-dropdown">
+
+        <!-- Botón que se clickea -->
+        <div class="scoop-navbar-main" (click)="toggleAdminMenu()" routerLinkActive="active">
+          <span class="material-icons">add</span>
+          <span>Registro</span>
+        </div>
+
+        <ul class="scoop-navbar-dropdown-menu" *ngIf="isDropDownOpen">
+          <li *ngIf="canSeeStudentItems()" routerLink="/registro-usuarios"
+          class="scoop-navbar-item" (click)="closeSidebar()">
+          <span class="material-icons">person_add</span>
+          <span>Registro de Usuarios</span>
+        </li>
+        <li *ngIf="canSeeAdminItems()" routerLink="/registro-materias"
+          class="scoop-navbar-item" (click)="closeSidebar()">
+          <span class="material-icons">library_add</span>
+          <span>Registro de Materias</span>
+        </li>
+      </ul>
+
+    </li>
+
       <li *ngIf="canSeeAdminItems()" routerLink="/administrador" routerLinkActive="active" class="scoop-navbar-item">
         <span class="material-icons">admin_panel_settings</span>
         <span>Admins</span>
@@ -23,11 +42,7 @@
         <span class="material-icons">bar_chart</span>
         <span>Gráficas</span>
       </li>
-      <li *ngIf="canSeeAdminItems()" routerLink="/registro-materias" routerLinkActive="active"
-          class="scoop-navbar-item" (click)="closeSidebar()">
-          <span class="material-icons">library_add</span>
-          <span>Registro de Materias</span>
-        </li>
+
       <li *ngIf="canSeeTeacherItems()" routerLink="/materias" routerLinkActive="active"
         class="scoop-navbar-item">
         <span class="material-icons">library_books</span>
@@ -63,10 +78,27 @@
     <nav class="scoop-side-navbar" [ngClass]="{'mobile-open': mobileOpen}">
       <ul class="scoop-navbar-list">
 
-        <li *ngIf="canSeeRegisterItem()" routerLink="/registro-usuarios" routerLinkActive="active"
-          class="scoop-navbar-item" (click)="closeSidebar()">
-          <span class="material-icons">person_add</span>
-          <span>Registro</span>
+        <li *ngIf="canSeeStudentItems()" class="scoop-navbar-item scoop-navbar-dropdown">
+
+            <!-- Botón que se clickea -->
+            <div class="scoop-navbar-main" (click)="toggleAdminMenu()" routerLinkActive="active">
+              <span class="material-icons">add</span>
+              <span>Registro</span>
+            </div>
+
+          <ul class="scoop-navbar-dropdown-menu" *ngIf="isDropDownOpen">
+            <li *ngIf="canSeeStudentItems()" routerLink="/registro-usuarios"
+              class="scoop-navbar-item" (click)="closeSidebar()">
+              <span class="material-icons">person_add</span>
+              <span>Registro de Usuarios</span>
+            </li>
+            <li *ngIf="canSeeAdminItems()" routerLink="/registro-materias"
+              class="scoop-navbar-item" (click)="closeSidebar()">
+              <span class="material-icons">library_add</span>
+              <span>Registro de Materias</span>
+            </li>
+          </ul>
+
         </li>
         <li *ngIf="canSeeAdminItems()" routerLink="/administrador" routerLinkActive="active" class="scoop-navbar-item"
           (click)="closeSidebar()">
@@ -87,11 +119,6 @@
           (click)="closeSidebar()">
           <span class="material-icons">bar_chart</span>
           <span>Gráficas</span>
-        </li>
-        <li *ngIf="canSeeAdminItems()" routerLink="/registro-materias" routerLinkActive="active"
-          class="scoop-navbar-item" (click)="closeSidebar()">
-          <span class="material-icons">library_add</span>
-          <span>Registro de Materias</span>
         </li>
         <li *ngIf="canSeeTeacherItems()" routerLink="/materias" routerLinkActive="active"
           class="scoop-navbar-item" (click)="closeSidebar()">

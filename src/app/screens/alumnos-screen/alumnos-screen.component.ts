@@ -20,6 +20,7 @@ export class AlumnosScreenComponent implements OnInit {
   public rol: string = "";
   public token: string = "";
   public lista_alumnos: any[] = [];
+  public id: number = 0;
 
   //Para la tabla
   displayedColumns: string[] = ['matricula', 'nombre', 'email', 'fecha_nacimiento', 'curp', 'rfc', 'edad', 'telefono','ocupacion', 'editar', 'eliminar'];
@@ -47,6 +48,7 @@ export class AlumnosScreenComponent implements OnInit {
   ngOnInit(): void {
     this.name_user = this.facadeService.getUserCompleteName();
     this.rol = this.facadeService.getUserGroup();
+    this.id = Number(this.facadeService.getUserId())
     //Validar que haya inicio de sesión
     //Obtengo el token del login
     this.token = this.facadeService.getSessionToken();
